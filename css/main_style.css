@@ -9,7 +9,35 @@ body {
   background-color: #efedf5;
   color: #756bb1;
   text-align: Center;
+  margin: 0;
 }
 h1 {
   color: #756bb1;
+  padding: 5px;
+  Margin: 0;
+}
+#body-container {
+  background color: #f0f0f0;
+  max-width: 1000px;
+  margin: auto;
+  min-height: 100vh
+  border:2px solid #f0f0f0
+  border-radius: 25px
+  overflow: hidden;
+}
+#header {
+  background-color: #756bb1;
+}
+#profile-picture {
+  float:left;
+}
+#welcome-text {
+  padding-top: 25px;
+  font-size: 25px;
+}
+#research-interests {
+  text-align: left;
+  font-size: 25px;
+  position: relative;
+  left: 50px;
 }
