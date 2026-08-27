@@ -1,3 +1,10 @@
+/*
+Colorblind safe color palette from colorbrewer2.org.
+#efedf5 - super light purple
+#bcbddc - light purple
+#756bb1 - dark purple
+*/
+
 body {
   background-color: #efedf5;
   color: #756bb1;
