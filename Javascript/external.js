@@ -1,1 +1,1 @@
-window.alert('5 + 6');
+document.write("Where is my JS code?");
