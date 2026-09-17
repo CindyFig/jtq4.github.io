@@ -39,9 +39,13 @@ h1 {
 }
 #research-interests {
   text-align: left;
-  font-size: 20px;
+  font-size: 16px;
   position: relative;
   left: 50px;
+}
+#research-interests ol {
+  padding-left: 20px;
+  margin-top: 5px;
 }
 #copyright {
   bottom:20px;
@@ -53,7 +57,8 @@ h1 {
   transform: translateX(-50%) translateY(-50%);
 }
 #webmap-reviews {
-  text-align: left;
+  text-align: center;
   fontsize: 25px;
   position: relative;
+  left: 50px;
 }
