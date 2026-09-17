@@ -15,6 +15,11 @@
 // {
 //   document.writeln(arr[i],"<br>");
 // }
+var webmaps =
+[
+  ["Pape-Dawson webmap", "https://maps.pape-dawson.com/austin_ext/", "The Pape-dawson external web map developed by the gis team is pretty cool"],
+  ["Texas Ecosystems Analytical Mapper", "http://tpwd.texas.gov/gis/team/", "The texas Parks and Wildlife's Landscape Ecology is great."]
+];
 function welcome()
 {
   let a = "please enter your name.";
@@ -26,15 +31,15 @@ return message
 }
 function webmap_table()
 {
-document.write("<table width=100%>")
-for (var row=0; row < 2; row++)
-{
-  document.write("<tr>");
-  for (var column=0; column < 3; column++)
-{
-  document.write("<td>" + row + "," + column + "</td>");
-}
-document.write("</tr>");
+  document.write("<table width=100%>")
+  for (var row=0; row < webmaps.length; row++)
+  {
+    document.write("<tr>");
+    for (var column=0; column < webmaps[0].length; column++)
+    {
+    document.write("<td>" + webmaps[row][column] + "</td>");
+  }
+  document.write("</tr>");
 }
 document.write("</table>");
 return "";
