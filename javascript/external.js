@@ -24,5 +24,3 @@ user_name = window.prompt(a, b);
 message = "<h1>Hello, welcome to my webpage, " + user_name + "!</h1>"
 return message
 }
-document.write(welcome());
-document.write(message);
