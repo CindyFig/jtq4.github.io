@@ -52,3 +52,8 @@ h1 {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
 }
+#webmap-reviews {
+  text-align: left;
+  fontsize: 25px;
+  position: relative;
+}
