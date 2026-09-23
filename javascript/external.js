@@ -17,8 +17,11 @@
 // }
 var webmaps =
 [
-  ["Pape-Dawson webmap", "https://maps.pape-dawson.com/austin_ext/", "The Pape-dawson external web map developed by the gis team is pretty cool"],
-  ["Texas Ecosystems Analytical Mapper", "http://tpwd.texas.gov/gis/team/", "The texas Parks and Wildlife's Landscape Ecology is great."]
+  ["Oil Spill Toolkit", "https://www.glo.texas.gov"],
+   ["The Oil Spill Toolkit developed by Enterprise Technology Solutions of the Texas General Land Office is a decision-support resource.<br>This is my second sentence about the Oil Spill Toolkit.<br>This is my third sentence about the Oil Spill Toolkit.<br>This is my fourth sentence about the Oil Spill Toolkit."],
+
+   ["Texas Ecosystems Analytical Mapper", "http://tpwd.texas.gov/gis/team/"],
+   ["The Texas Parks and Wildlife's Landscape Ecology program developed this application to deliver ecological mapping data to Texas citizens.<br>This is my second sentence about the Texas Ecosystems Analytical Mapper.<br>This is my third sentence about the Texas Ecosystems Analytical Mapper.<br>This is my fourth sentence about the Texas Ecosystems Analytical Mapper."]
 ];
 function welcome()
 {
@@ -31,16 +34,29 @@ return message
 }
 function webmap_table()
 {
-  document.write("<table width=100%>")
-  for (var row=0; row < webmaps.length; row++)
-  {
-    document.write("<tr>");
-    for (var column=0; column < webmaps[0].length; column++)
+  document.write("<table width=100%>");
+
+    for (var row=0; row < webmaps.length; row++)
     {
-    document.write("<td>" + webmaps[row][column] + "</td>");
-  }
-  document.write("</tr>");
-}
-document.write("</table>");
-return "";
+        if (row % 2 == 0)
+        {
+            document.write("<tr>");
+
+            for (var column=0; column < webmaps[row].length; column++)
+            {
+                document.write("<td>" + webmaps[row][column] + "</td>");
+            }
+
+            document.write("</tr>");
+        }
+        else
+        {
+            document.write("<tr>");
+            document.write("<td colspan='2'>" + webmaps[row][0] + "</td>");
+            document.write("</tr>");
+        }
+    }
+
+    document.write("</table>");
+    return "";
 }
