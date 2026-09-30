@@ -63,28 +63,41 @@ NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s=" crossorigin=""></script>
   var mymap = L.map('mapid');
 //L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {maxZoom: 18, id: 'mapbox/dark-v10',accessToken: mapbox_access_token}).addTo(mymap);
 L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {}).addTo(mymap);
-var marker = L.marker([51.5, -0.09]).addTo(mymap);
-var circle = L.circle([51.508, -0.11], { color: 'red', fillcolor: '#f03',
-fillOpacity: 0.5, radius: 500}).addTo(mymap);
-var polygon = L.polygon([[51.509, -0.08], [51.503, -0.06], [51.51, -0.047]]).addTo(mymap);
-marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-circle.bindPopup("I am a circle.");
-polygon.bindPopup("I am a polygon.");
-marker.on('click', function(e){ mymap.setView(e.latlng, 14);})
-circle.on('click', function(e){ mymap.setView(e.latlng, 13);})
-polygon.on('click', function(e){ mymap.setView(e.latlng, 13);})
-var ZoomViewer = L.Control.extend({ onAdd: function(){
-  var gauge = L.DomUtil.create('div');
-  gauge.style.width = '200px';
-  gauge.style.background = 'rgba(255,255,255,0.5)';
-  gauge.style.textAlign = 'left';
-  mymap.on('zoomstart zoom zoomend', function(ev){
-    gauge.innerHTML = 'zoom level: ' + mymap.getZoom();
-  })
-  return gauge;
-  }
-});
-(new ZoomViewer).addTo(mymap);
+var geocoder = L.Control.geocoder({
+  defaultMarkGeocode: false,
+  geocoder: new L.Control.Geocoder.Nominatim()
+}).on('markgeocode', function(e) {
+var bbox = e.geocode.bbox;
+var poly = L.polygon([
+  bbox.getSouthEast(),
+  bbox.getNorthEast(),
+  bbox.getNorthWest(),
+  bbox.getSouthWest(),
+]);
+mymap.fitBounds(poly.getBounds());
+}).addTo(mymap);
+//var marker = L.marker([51.5, -0.09]).addTo(mymap);
+//var circle = L.circle([51.508, -0.11], { color: 'red', fillcolor: '#f03',
+//fillOpacity: 0.5, radius: 500}).addTo(mymap);
+//var polygon = L.polygon([[51.509, -0.08], [51.503, -0.06], [51.51, -0.047]]).addTo(mymap);
+//marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+//circle.bindPopup("I am a circle.");
+//polygon.bindPopup("I am a polygon.");
+//marker.on('click', function(e){ mymap.setView(e.latlng, 14);})
+//circle.on('click', function(e){ mymap.setView(e.latlng, 13);})
+//polygon.on('click', function(e){ mymap.setView(e.latlng, 13);})
+//var ZoomViewer = L.Control.extend({ onAdd: function(){
+//  var gauge = L.DomUtil.create('div');
+  //gauge.style.width = '200px';
+//  gauge.style.background = 'rgba(255,255,255,0.5)';
+  //gauge.style.textAlign = 'left';
+//  mymap.on('zoomstart zoom zoomend', function(ev){
+  //  gauge.innerHTML = 'zoom level: ' + mymap.getZoom();
+//  })
+//  return gauge;
+//  }
+//});
+//(new ZoomViewer).addTo(mymap);
 mymap.setView([0,0], 1);
   </script>
 </div>
