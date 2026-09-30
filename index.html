@@ -99,6 +99,13 @@ mymap.fitBounds(poly.getBounds());
 //});
 //(new ZoomViewer).addTo(mymap);
 mymap.setView([0,0], 1);
+// Seven Wonders of the world
+var tajIcon = L.divIcon({
+  ClassName: 'wonder-maker',
+  html: '<div style="background-color:red; width:18px; height:18px; border-radius:50%; border:2px solid white;"></div>',
+  iconSize: [22, 22],
+  iconAnchor: [11, 11]
+});
   </script>
 </div>
   <div id="copyright">
