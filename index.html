@@ -1,6 +1,13 @@
 <!doctype html>
 <html>
 <head>
+<meta charset="utf-8">
+<meta name = "viewport" content = "width=device-width, initial- scale=1.0" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.1/dist/leaflet.css"
+intergrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.1/dist/leaflet.js" integrity="sha256-
+NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s=" crossorigin=""></script>
+<script src="javascript/secret_keys.js"></script>
   <title>Cindy Figueroa</title>
   <!-- All styling for this HTML document are contained in this external css
   file -->
@@ -45,6 +52,15 @@
     document.write(webmap_table());
     </script>
   </p>
+</div>
+<h3>Geocoding Map</h3>
+<br>
+<div id="mapid" style="width: 600px; height: 400px; margin: auto; bottom: 30px;">
+  <script>
+  var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+  L.titleLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?access_token={accessToken}', {maxZoom: 18,
+id: 'mapbox.mapbox-traffic-v1', accessToken: mapbox_access_token}).addTo(mymap);
+  </script>
 </div>
   <div id="copyright">
     <script>
