@@ -74,19 +74,17 @@ polygon.bindPopup("I am a polygon.");
 marker.on('click', function(e){ mymap.setView(e.latlng, 14);})
 circle.on('click', function(e){ mymap.setView(e.latlng, 13);})
 polygon.on('click', function(e){ mymap.setView(e.latlng, 13);})
-var ZoomViewer = L.Control.extend({onAdd: function(){
+var ZoomViewer = L.Control.extend({ onAdd: function(){
   var gauge = L.DomUtil.create('div');
   gauge.style.width = '200px';
   gauge.style.background = 'rgba(255,255,255,0.5)';
   gauge.style.textAlign = 'left';
-  mymap.on('zoomstart zoom zoomend', funtion(ev){
-    gauge.innerHTML = 'Zoom Level: ' + mymap.getZoom();
+  mymap.on('zoomstart zoom zoomend', function(ev){
+    gauge.innerHTML = 'zoom level: ' + mymap.getZoom();
   })
   return gauge;
-}
+  }
 });
-(new ZoomViewer).addTo(mymap);
-mymap.setView([0,0], 1);
   </script>
 </div>
   <div id="copyright">
