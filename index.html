@@ -8,6 +8,8 @@ intergrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="">
 <link rel="stylesheet" type="text/css" href="css/map_style.css">
 <script src="https://unpkg.com/leaflet@1.9.1/dist/leaflet.js" integrity="sha256-
 NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s=" crossorigin=""></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css">
+<script src="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js"></script>
 <script src="javascript/secret_keys.js"></script>
   <title>Cindy Figueroa</title>
   <!-- All styling for this HTML document are contained in this external css
@@ -59,8 +61,8 @@ NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s=" crossorigin=""></script>
 <div id="mapid" style="width: 600px; height: 400px; margin: auto; bottom: 30px;">
   <script>
   var mymap = L.map('mapid');
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?access_token={accessToken}', {maxZoom: 18,
-    id: 'mapbox.mapbox-traffic-v1', accessToken: mapbox_access_token}).addTo(mymap);
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {maxZoom: 18, id: 'mapbox/dark-v10',
+accessToken: mapbox_access_token}).addTo(mymap);
 
 var marker = L.marker([51.5, -0.09]).addTo(mymap);
 var circle = L.circle([51.508, -0.11], { color: 'red', fillcolor: '#f03',
