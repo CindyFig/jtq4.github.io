@@ -64,22 +64,22 @@ geocoder/dist/Control.Geocoder.css" />
 <br>
 <div id="mapid" style="width: 600px; height: 400px; margin: auto; bottom: 30px;">
   <script>
-  var mymap = L.map('mapid');
+//;  var mymap = L.map('mapid');
 //L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {maxZoom: 18, id: 'mapbox/dark-v10',accessToken: mapbox_access_token}).addTo(mymap);
-L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {}).addTo(mymap);
-var geocoder = L.Control.geocoder({
-  defaultMarkGeocode: false,
-  geocoder: new L.Control.Geocoder.Nominatim()
-}).on('markgeocode', function(e) {
-var bbox = e.geocode.bbox;
-var poly = L.polygon([
-  bbox.getSouthEast(),
-  bbox.getNorthEast(),
-  bbox.getNorthWest(),
-  bbox.getSouthWest(),
-]);
-mymap.fitBounds(poly.getBounds());
-}).addTo(mymap);
+//  L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {}).addTo(mymap);
+//var geocoder = L.Control.geocoder({
+//  defaultMarkGeocode: false,
+//  geocoder: new L.Control.Geocoder.Nominatim()
+//}).on('markgeocode', function(e) {
+//var bbox = e.geocode.bbox;
+//var poly = L.polygon([
+//  bbox.getSouthEast(),
+//  bbox.getNorthEast(),
+//  bbox.getNorthWest(),
+//  bbox.getSouthWest(),
+//]);
+//mymap.fitBounds(poly.getBounds());
+//}).addTo(mymap);
 //var marker = L.marker([51.5, -0.09]).addTo(mymap);
 //var circle = L.circle([51.508, -0.11], { color: 'red', fillcolor: '#f03',
 //fillOpacity: 0.5, radius: 500}).addTo(mymap);
@@ -102,7 +102,183 @@ mymap.fitBounds(poly.getBounds());
 //  }
 //});
 //(new ZoomViewer).addTo(mymap);
-mymap.setView([0,0], 1);
+//<script>
+var mymap = L.map('mapid');
+L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {}).addTo(mymap);
+masZoom: 18,
+attribution: '&copy; OpenStreetMap contributors'
+}).addTo(mymap);
+
+var geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false,
+    geocoder: new L.Control.Geocoder.Nominatim()
+}).on('markgeocode', function(e) {
+
+    var bbox = e.geocode.bbox;
+
+    var poly = L.polygon([
+        bbox.getSouthEast(),
+        bbox.getNorthEast(),
+        bbox.getNorthWest(),
+        bbox.getSouthWest()
+    ]);
+
+    mymap.fitBounds(poly.getBounds());
+
+}).addTo(mymap);
+
+mymap.setView([0, 0], 1);
+
+</script>
+
+</div>
+
+<h3>Seven Wonders of the World</h3>
+<br>
+
+<div id="wonders-map" style="width: 600px; height: 500px; margin: auto; bottom: 30px;">
+
+<script>
+
+var wondersMap = L.map('wonders-map');
+
+L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(wondersMap);
+
+
+function wonderIcon(letter) {
+    return L.divIcon({
+        className: '',
+        html: '<div class="wonder-icon">' + letter + '</div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -16]
+    });
+}
+
+
+// 1. TAJ MAHAL
+var tajMahal = L.marker(
+    [27.174961, 78.042385],
+    {icon: wonderIcon('T')}
+).addTo(wondersMap);
+
+tajMahal.bindPopup(
+    '<div class="wonder-popup">' +
+    '<b>India\'s Taj Mahal</b><br>' +
+    '<img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Taj-Mahal.jpg" alt="Taj Mahal">' +
+    '<p>The Taj Mahal is a famous marble mausoleum located in Agra, India. It was commissioned by Mughal emperor Shah Jahan and is known for its beautiful architecture.</p>' +
+    '</div>'
+);
+
+
+// 2. GREAT WALL OF CHINA
+var greatWall = L.marker(
+    [40.334245, 116.477652],
+    {icon: wonderIcon('G')}
+).addTo(wondersMap);
+
+greatWall.bindPopup(
+    '<div class="wonder-popup">' +
+    '<b>Great Wall of China</b><br>' +
+    '<img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Great_Wall_of_China_July_2006.JPG" alt="Great Wall of China">' +
+    '<p>The Great Wall of China is a historic series of fortifications built across northern China. It is one of the world\'s most recognizable landmarks.</p>' +
+    '</div>'
+);
+
+
+// 3. PETRA
+var petra = L.marker(
+    [30.328611, 35.441944],
+    {icon: wonderIcon('P')}
+).addTo(wondersMap);
+
+petra.bindPopup(
+    '<div class="wonder-popup">' +
+    '<b>Petra in Jordan</b><br>' +
+    '<img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Al_Khazneh_Petra_2007.jpg" alt="Petra">' +
+    '<p>Petra is an ancient city in Jordan famous for buildings carved directly into sandstone cliffs. It is also known as the Rose City.</p>' +
+    '</div>'
+);
+
+
+// 4. CHRIST THE REDEEMER
+var christRedeemer = L.marker(
+    [-22.951389, -43.2108334],
+    {icon: wonderIcon('C')}
+).addTo(wondersMap);
+
+christRedeemer.bindPopup(
+    '<div class="wonder-popup">' +
+    '<b>Christ the Redeemer</b><br>' +
+    '<img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Cristo_Redentor_-_Rio_de_Janeiro%2C_Brasil.jpg" alt="Christ the Redeemer">' +
+    '<p>Christ the Redeemer is a massive statue overlooking Rio de Janeiro, Brazil. The monument is located on Mount Corcovado and is an iconic symbol of the city.</p>' +
+    '</div>'
+);
+
+
+// 5. MACHU PICCHU
+var machuPicchu = L.marker(
+    [-13.163056, -72.545556],
+    {icon: wonderIcon('M')}
+).addTo(wondersMap);
+
+machuPicchu.bindPopup(
+    '<div class="wonder-popup">' +
+    '<b>Machu Picchu</b><br>' +
+    '<img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Machu_Picchu%2C_Peru.jpg" alt="Machu Picchu">' +
+    '<p>Machu Picchu is an ancient Inca site located high in the Andes Mountains of Peru. It is known for its stone structures, terraces, and dramatic mountain setting.</p>' +
+    '</div>'
+);
+
+
+// 6. CHICHEN ITZA
+var chichenItza = L.marker(
+    [20.682778, -88.569167],
+    {icon: wonderIcon('I')}
+).addTo(wondersMap);
+
+chichenItza.bindPopup(
+    '<div class="wonder-popup">' +
+    '<b>Chichen Itza</b><br>' +
+    '<img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Chichen_Itza_3.jpg" alt="Chichen Itza">' +
+    '<p>Chichen Itza is an ancient Maya city located in Mexico\'s Yucatan Peninsula. Its most famous structure is the pyramid known as El Castillo.</p>' +
+    '</div>'
+);
+
+
+// 7. COLOSSEUM
+var colosseum = L.marker(
+    [41.890169, 12.492269],
+    {icon: wonderIcon('R')}
+).addTo(wondersMap);
+
+colosseum.bindPopup(
+    '<div class="wonder-popup">' +
+    '<b>The Colosseum</b><br>' +
+    '<img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Colosseo_2020.jpg" alt="Colosseum">' +
+    '<p>The Colosseum is an ancient amphitheater in Rome, Italy. It was used for public spectacles and is one of the most famous surviving structures of ancient Rome.</p>' +
+    '</div>'
+);
+
+
+// SHOW ALL SEVEN WONDERS
+wondersMap.fitBounds([
+    [27.174961, 78.042385],
+    [40.334245, 116.477652],
+    [30.328611, 35.441944],
+    [-22.951389, -43.2108334],
+    [-13.163056, -72.545556],
+    [20.682778, -88.569167],
+    [41.890169, 12.492269]
+]);
+
+</script>
+
+</div>
+
   </script>
 </div>
   <div id="copyright">
