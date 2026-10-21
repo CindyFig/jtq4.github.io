@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Terra Atlas | GIS Lab 7</title>
+
+<!-- ArcGIS JavaScript API -->
+<link rel="stylesheet"
+href="https://js.arcgis.com/4.21/esri/themes/light/main.css">
+
+<script src="https://js.arcgis.com/4.21/"></script>
+
+<style>
+
+/* GENERAL PAGE STYLING */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f6f4ed;
+}
+
+/* MAIN MAP */
+#viewDiv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* FLOATING CONTROL PANEL */
+.sidebar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 340px;
+    max-height: calc(100vh - 85px);
+    overflow-y: auto;
+    z-index: 10;
+    background: #f8f7f1;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 8px 35px rgba(20, 45, 35, 0.20);
+}
+
+/* BRAND */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.brand-icon {
+    background: #244c43;
+    color: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+
+.brand-name {
+    color: #244c43;
+    font-size: 17px;
+    font-weight: 750;
+    letter-spacing: 2px;
+}
+
+.brand-subtitle {
+    font-size: 10px;
+    color: #84978a;
+    letter-spacing: 2px;
+    margin-top: 3px;
+}
+
+/* MAIN HEADING */
+.eyebrow {
+    color: #84978a;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+h1 {
+    color: #244c43;
+    font-family: Georgia, serif;
+    font-size: 31px;
+    font-weight: normal;
+    line-height: 1.15;
+    margin: 10px 0;
+}
+
+.description {
+    color: #6d8074;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+/* QUERY PANEL */
+.query-panel {
+    background: #edf1e9;
+    padding: 18px;
+    border-radius: 13px;
+}
+
+.panel-title {
+    color: #244c43;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    color: #5e7669;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 15px 0 7px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d6e0d4;
+    border-radius: 8px;
+    background: white;
+    color: #244c43;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: 2px solid #8fae9b;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    background: #244c43;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 13px;
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #38695a;
+}
+
+/* STATUS MESSAGE */
+#status {
+    color: #5e7669;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: 15px;
+}
+
+/* NAVIGATION */
+.navigation {
+    margin-top: 25px;
+    border-top: 1px solid #dce5d8;
+    padding-top: 20px;
+}
+
+.navigation h3 {
+    color: #244c43;
+    font-size: 14px;
+    margin: 0 0 12px;
+}
+
+/* FOOTER */
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    background: rgba(36, 76, 67, 0.92);
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 11px;
+}
+
+/* MOBILE DESIGN */
+@media (max-width: 650px) {
+    .sidebar {
+        width: calc(100% - 24px);
+        top: 12px;
+        left: 12px;
+        padding: 18px;
+        max-height: 65vh;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    footer {
+        font-size: 9px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MAP CONTAINER -->
+<div id="viewDiv"></div>
+
+<!-- FLOATING SIDEBAR -->
+<div class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">&#9678;</div>
+
+        <div>
+            <div class="brand-name">TERRA / ATLAS</div>
+            <div class="brand-subtitle">
+                GEOGRAPHIC EXPLORER
+            </div>
+        </div>
+    </div>
+
+    <div class="eyebrow">
+        INTERACTIVE MAPPING EXPERIENCE
+    </div>
+
+    <h1>Explore the<br>United States.</h1>
+
+    <p class="description">
+        Discover geographic patterns through
+        interactive state boundaries,
+        transportation networks, and spatial queries.
+    </p>
+
+    <!-- QUERY CONTROLS -->
+    <div class="query-panel">
+
+        <div class="panel-title">
+            &#9672; Explore your map
+        </div>
+
+        <label for="stateSelect">SELECT A STATE</label>
+
+        <select id="stateSelect">
+            <option value="Texas">Texas</option>
+            <option value="Florida">Florida</option>
+            <option value="Colorado">Colorado</option>
+            <option value="New York">New York</option>
+            <option value="California">California</option>
+            <option value="Washington">Washington</option>
+        </select>
+
+        <label for="queryMode">QUERY TYPE</label>
+
+        <select id="queryMode">
+            <option value="state">
+                Selected state
+            </option>
+            <option value="large">
+                States with population above 5 million
+            </option>
+        </select>
+
+        <button id="queryBtn">
+            Explore selected area &rarr;
+        </button>
+
+        <div id="status">
+            Loading geographic data...
+        </div>
+
+    </div>
+
+    <!-- LAB PAGE NAVIGATION -->
+    <div class="navigation">
+
+        <h3>Lab 7 Navigation</h3>
+
+        <label for="labPages">EXPLORE LAB ACTIVITIES</label>
+
+        <select id="labPages">
+            <option value="">Choose a lab page...</option>
+            <option value="simple_mapping.html">
+                01 - Simple Mapping
+            </option>
+            <option value="tile_layer.html">
+                02 - Tile Layers
+            </option>
+            <option value="dynamic_layers.html">
+                03 - Dynamic Layers
+            </option>
+            <option value="on_event.html">
+                04 - On Event
+            </option>
+            <option value="basemap_gallery.html">
+                05 - Basemap Gallery
+            </option>
+            <option value="query_task.html">
+                06 - Query Task
+            </option>
+        </select>
+
+    </div>
+
+</div>
+
+<!-- COPYRIGHT FOOTER -->
+<footer>
+    &copy; 2026 Terra Atlas | GEO 4422 Web Mapping |
+    Geographic data: Esri / U.S. Census Bureau
+</footer>
+
+<script>
+
+/* LOAD ARCGIS MODULES */
+require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/TileLayer",
+    "esri/layers/FeatureLayer",
+    "esri/layers/GraphicsLayer",
+    "esri/Graphic"
+], function(
+    Map,
+    MapView,
+    TileLayer,
+    FeatureLayer,
+    GraphicsLayer,
+    Graphic
+) {
+
+    const status = document.getElementById("status");
+
+    /* TRANSPORTATION TILE LAYER */
+    const transportation = new TileLayer({
+        url:
+        "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer",
+        title: "Transportation",
+        opacity: 0.65
+    });
+
+    /* U.S. STATES FEATURE LAYER */
+    const states = new FeatureLayer({
+        url:
+        "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3",
+
+        title: "U.S. States",
+
+        outFields: ["*"],
+
+        renderer: {
+            type: "simple",
+            symbol: {
+                type: "simple-fill",
+                color: [137, 174, 151, 0.25],
+                outline: {
+                    color: [36, 76, 67, 0.9],
+                    width: 1.5
+                }
+            }
+        },
+
+        popupTemplate: {
+            title: "{STATE_NAME}",
+            content:
+                "Population: {POP2007}<br>" +
+                "Households: {HOUSEHOLDS}"
+        }
+    });
+
+    /* QUERY RESULTS LAYER */
+    const resultsLayer = new GraphicsLayer({
+        title: "Selected States"
+    });
+
+    /* CREATE MAP */
+    const map = new Map({
+        basemap: "gray-vector",
+        layers: [
+            transportation,
+            states,
+            resultsLayer
+        ]
+    });
+
+    /* CREATE MAP VIEW */
+    const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-98.5, 39.5],
+        zoom: 4
+    });
+
+    /* MAP LOAD STATUS */
+    view.when(function() {
+        status.textContent =
+            "Map ready! Select a state to explore.";
+    }).catch(function(error) {
+        console.error(error);
+        status.textContent =
+            "Map failed to load. Check browser console.";
+    });
+
+    states.when().catch(function(error) {
+        console.error("States layer error:", error);
+        status.textContent =
+            "States layer failed to load.";
+    });
+
+    /* QUERY BUTTON */
+    document.getElementById("queryBtn")
+        .addEventListener("click", async function() {
+
+            const stateName =
+                document.getElementById("stateSelect").value;
+
+            const mode =
+                document.getElementById("queryMode").value;
+
+            resultsLayer.removeAll();
+
+            status.textContent = "Searching...";
+
+            try {
+
+                const query = states.createQuery();
+
+                if (mode === "state") {
+                    query.where =
+                        "STATE_NAME = '" + stateName + "'";
+                } else {
+                    query.where = "POP2007 > 5000000";
+                }
+
+                query.returnGeometry = true;
+                query.outFields = ["*"];
+
+                const result =
+                    await states.queryFeatures(query);
+
+                if (result.features.length === 0) {
+                    status.textContent =
+                        "No matching results found.";
+                    return;
+                }
+
+                /* HIGHLIGHT RESULTS */
+                const graphics = result.features.map(
+                    function(feature) {
+
+                        return new Graphic({
+                            geometry: feature.geometry,
+                            attributes: feature.attributes,
+
+                            symbol: {
+                                type: "simple-fill",
+                                color: [181, 207, 167, 0.55],
+                                outline: {
+                                    color: [36, 76, 67],
+                                    width: 2.5
+                                }
+                            },
+
+                            popupTemplate: states.popupTemplate
+                        });
+                    }
+                );
+
+                resultsLayer.addMany(graphics);
+
+                /* ANIMATED ZOOM */
+                await view.goTo(graphics, {
+                    duration: 1200
+                });
+
+                status.textContent =
+                    graphics.length +
+                    " matching state(s) found.";
+
+            } catch(error) {
+
+                console.error("Query error:", error);
+
+                status.textContent =
+                    "Query failed. Check F12 Console.";
+            }
+        });
+
+    /* LAB PAGE DROPDOWN */
+    document.getElementById("labPages")
+        .addEventListener("change", function() {
+
+            if (this.value !== "") {
+
+                window.open(
+                    this.value,
+                    "_blank",
+                    "noopener"
+                );
+
+                this.value = "";
+            }
+        });
+
+});
+</script>
+
+</body>
+</html>

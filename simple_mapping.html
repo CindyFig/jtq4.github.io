@@ -1,32 +1,51 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content = "initial-scale=1, maximum-scale=1, user-scalable=no"/>
-  <title> Simple Mapping </title>
-  <link rel = "stylesheet" href = "https://js.arcgis.com/4.21/esri/themes/light/main.css"/>
-  <script src = "https://js.arcgis.com/4.21/"> </script>
-  <style>
-    html, body, #ViewDiv {
-      padding: 0;
-      margin 0;
-      height: 100%;}
-  </style>
-  <script>
-    require(["esri/Map", "esri/views/MapView"], (Map, MapView) => {
-      const map = new Map({
-        basemap: "dark-gray-vector",
-      });
-      const view = new MapView ({
-        container: "viewDiv",
-        map: map,
-        zoom: 5,
-        center: [-83.114, 36.921]
-      });
-    });
-  </script>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Simple Mapping</title>
+
+    <link rel="stylesheet"
+          href="https://js.arcgis.com/4.21/esri/themes/light/main.css">
+
+    <script src="https://js.arcgis.com/4.21/"></script>
+
+    <style>
+        html, body, #viewDiv {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="viewDiv"></div>
+    <div id="viewDiv"></div>
+
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/MapView"
+        ], function(Map, MapView) {
+
+            // Create the map
+            const map = new Map({
+                basemap: "dark-gray-vector"
+            });
+
+            // Display the map
+            const view = new MapView({
+                container: "viewDiv",
+                map: map,
+                zoom: 5,
+                center: [-83.114, 36.921]
+            });
+
+        });
+    </script>
 </body>
 </html>

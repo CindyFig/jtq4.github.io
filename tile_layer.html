@@ -1,0 +1,29 @@
+
+<script>
+require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/TileLayer"
+], function(Map, MapView, TileLayer) {
+
+    // Create transportation tile layer
+    const TransportationLayer = new TileLayer({
+        url: "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer"
+    });
+
+    // Create map with oceans basemap
+    const map = new Map({
+        basemap: "oceans",
+        layers: [TransportationLayer]
+    });
+
+    // Center map near Los Angeles
+    const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        zoom: 10,
+        center: [-118.2095, 34.0866]
+    });
+
+});
+</script>
